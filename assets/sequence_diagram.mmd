@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant C as Capture
+    participant F as FaceDetector
+    participant M as Measurement Modules
+    participant D as DrowsinessMonitor
+    participant A as AlertManager
+    C->>F: send video frame
+    F-->>C: landmarks or no face
+    C->>M: calculate EAR and MAR
+    M-->>C: measurements
+    C->>D: update(EAR, MAR)
+    D-->>C: status and message
+    alt DROWSY
+      C->>A: trigger warning
+      A-->>C: overlay alert
+    end
+    C->>C: show or save frame
